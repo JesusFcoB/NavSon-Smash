@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NavSon Smash - CSS Optimizado</title>
+    <style>
+        /* ===== VARIABLES CSS ===== */
+        :root {
+            --primary-color: #00b4ff;
+            --primary-dark: #0099cc;
+            --primary-light: rgba(0, 180, 255, 0.1);
+            --bg-dark: #0c1624;
+            --bg-darker: #080f1a;
+            --bg-sidebar: #0d2239;
+            --bg-card: rgba(255, 255, 255, 0.05);
+            --text-light: rgba(255, 255, 255, 0.9);
+            --text-lighter: rgba(255, 255, 255, 0.7);
+            --border-radius: 12px;
+            --border-radius-lg: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            --shadow-hover: 0 16px 48px rgba(0, 180, 255, 0.2);
+            --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.2);
+            --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, #0080ff 100%);
+            --gradient-bg: linear-gradient(135deg, var(--bg-darker) 0%, var(--bg-dark) 100%);
+            --gradient-sidebar: linear-gradient(180deg, var(--bg-sidebar) 0%, rgba(13, 34, 57, 0.95) 100%);
+        }
+
+        /* ===== RESET Y ESTILOS BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--gradient-bg);
+            color: white;
+            line-height: 1.6;
+            overflow-x: hidden;
+            animation: fadeIn 1s ease-out;
+        }
+
+        /* ===== ANIMACIONES PRINCIPALES ===== */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(0.95);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes typeWriter {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes titleGlow {
+            from {
+                text-shadow: 0 2px 10px rgba(0, 180, 255, 0.3);
+            }
+            to {
+                text-shadow: 0 2px 20px rgba(0, 180, 255, 0.6), 0 0 30px rgba(0, 180, 255, 0.4);
+            }
+        }
+
+        @keyframes borderGlow {
+            0%, 100% {
+                filter: hue-rotate(0deg);
+            }
+            50% {
+                filter: hue-rotate(45deg);
+            }
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* ===== LAYOUT PRINCIPAL ===== */
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* ===== SIDEBAR OPTIMIZADO ===== */
+        .sidebar {
+            width: 280px;
+            background: var(--gradient-sidebar);
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1rem;
+            border-right: 1px solid rgba(0, 180, 255, 0.1);
+            backdrop-filter: blur(10px);
+            animation: slideInLeft 0.8s ease-out;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        /* Logo mejorado */
+        .logo {
+            text-align: center;
+            margin-bottom: 2rem;
+            animation: bounceIn 1s ease-out 0.3s both;
+        }
+
+        .logo img {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            transition: var(--transition-slow);
+            border: 3px solid transparent;
+            background: linear-gradient(45deg, var(--primary-color), transparent) border-box;
+        }
+
+        .logo img:hover {
+            transform: scale(1.05) rotate(5deg);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 30px rgba(0, 180, 255, 0.4);
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            margin: 1rem 0 0.5rem;
+            background: linear-gradient(45deg, var(--primary-color), #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: typeWriter 1.5s steps(20) 0.5s both;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .logo p {
+            font-size: 0.75rem;
+            color: var(--text-lighter);
+            animation: fadeInUp 0.8s ease-out 1s both;
+        }
+
+        /* Navegación mejorada */
+        .nav-menu {
+            list-style: none;
+            width: 100%;
+            margin-top: 2rem;
+            animation: fadeIn 1s ease-out 1.2s both;
+        }
+
+        .nav-item {
+            margin: 0.75rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--primary-light), transparent);
+            transition: var(--transition);
+        }
+
+        .nav-item:hover::before {
+            left: 100%;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            position: relative;
+            border: 1px solid transparent;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--primary-color);
+            background: var(--primary-light);
+            border-color: rgba(0, 180, 255, 0.2);
+            transform: translateX(8px);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 0;
+            background: var(--primary-color);
+            border-radius: 0 2px 2px 0;
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            height: 60%;
+        }
+
+        /* ===== CONTENIDO PRINCIPAL ===== */
+        .main-content {
+            margin-left: 280px;
+            flex: 1;
+            padding: 3rem;
+            min-height: 100vh;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(0, 180, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 0, 100, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(0, 255, 180, 0.05) 0%, transparent 50%);
+            animation: slideInRight 0.8s ease-out 0.5s both;
+        }
+
+        /* Título de sección */
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, var(--primary-color), #80d8ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        /* ===== CONTENEDOR DE TARJETAS ===== */
+        .cards-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            width: fit-content;
+            margin: 0 auto;
+        }
+
+        /* ===== TARJETAS DE REDES SOCIALES ===== */
+        .card {
+            background: var(--bg-card);
+            border-radius: var(--border-radius-lg);
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition-slow);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--shadow-card);
+            animation: cardSlideUp 0.6s ease-out both;
+            width: 100%;
+            min-width: 300px;
+            height: 280px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            backdrop-filter: blur(10px);
+        }
+
+        @keyframes cardSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Animaciones escalonadas para las cards */
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: var(--transition-slow);
+        }
+
+        .card:hover::before {
+            left: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.4),
+                0 0 0 1px rgba(0, 180, 255, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        /* Efecto de borde luminoso */
+        .card::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: var(--gradient-primary);
+            border-radius: calc(var(--border-radius-lg) + 2px);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card:hover::after {
+            opacity: 1;
+            animation: borderGlow 2s linear infinite;
+        }
+
+        /* Iconos de redes sociales */
+        .card-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            transition: var(--transition-slow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-icon::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
+            transform: rotate(45deg);
+            transition: var(--transition-slow);
+            opacity: 0;
+        }
+
+        .card:hover .card-icon::before {
+            opacity: 1;
+            transform: rotate(45deg) translate(50%, 50%);
+        }
+
+        .card:hover .card-icon {
+            transform: scale(1.1) rotate(5deg);
+            filter: drop-shadow(0 0 15px currentColor);
+        }
+
+        /* Colores específicos para cada red social */
+        .instagram {
+            background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);
+            color: white;
+        }
+
+        .facebook {
+            background: #1877F2;
+            color: white;
+        }
+
+        .whatsapp {
+            background: #25D366;
+            color: white;
+        }
+
+        .youtube {
+            background: #FF0000;
+            color: white;
+        }
+
+        /* Contenido de las cards */
+        .card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.75rem;
+            color: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .card:hover h3 {
+            text-shadow: 0 0 10px rgba(0, 180, 255, 0.5);
+        }
+
+        .card p {
+            color: var(--text-lighter);
+            line-height: 1.5;
+            margin-bottom: 1.25rem;
+            font-size: 0.9rem;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ===== BOTONES OPTIMIZADOS ===== */
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: rgba(0, 180, 255, 0.2);
+            color: var(--primary-color);
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 180, 255, 0.3);
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 180, 255, 0.4), transparent);
+            transition: var(--transition);
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            background: var(--primary-color);
+            color: var(--bg-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 180, 255, 0.4);
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        /* Tablets */
+        @media (max-width: 1024px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 25px;
+            }
+            
+            .card {
+                padding: 1.5rem;
+                height: 260px;
+                min-width: 280px;
+            }
+            
+            .main-content {
+                padding: 2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Móviles grandes */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                padding: 1rem;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+                padding: 1.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.75rem;
+                margin-bottom: 2rem;
+            }
+            
+            /* En móvil, cambiar a 1 columna CENTRADA */
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                width: 100%;
+                max-width: 400px;
+            }
+            
+            .card {
+                padding: 1.5rem;
+                height: 240px;
+                min-width: auto;
+            }
+            
+            .card-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
+            }
+            
+            .card h3 {
+                font-size: 1.25rem;
+            }
+            
+            .card p {
+                font-size: 0.85rem;
+            }
+            
+            .logo img {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .logo h1 {
+                font-size: 1.25rem;
+            }
+        }
+
+        /* Móviles pequeños */
+        @media (max-width: 480px) {
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .card {
+                height: 220px;
+                padding: 1.25rem;
+            }
+            
+            .card h3 {
+                font-size: 1.1rem;
+            }
+            
+            .card p {
+                font-size: 0.8rem;
+            }
+            
+            .btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.8rem;
+            }
+            
+            .main-content {
+                padding: 1rem;
+            }
+        }
+
+        /* Para pantallas muy pequeñas */
+        @media (max-width: 360px) {
+            .grid {
+                max-width: 300px;
+            }
+            
+            .card {
+                height: 200px;
+                padding: 1rem;
+            }
+        }
+
+        /* ===== MEJORAS DE RENDIMIENTO ===== */
+        .card, .btn, .logo img, .nav-link {
+            will-change: transform, opacity;
+        }
+
+        /* ===== UTILIDADES ===== */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-1 { margin-top: 0.5rem; }
+        .mt-2 { margin-top: 1rem; }
+        .mt-3 { margin-top: 1.5rem; }
+        .mb-1 { margin-bottom: 0.5rem; }
+        .mb-2 { margin-bottom: 1rem; }
+        .mb-3 { margin-bottom: 1.5rem; }
+
+        /* ===== ESTADOS DE CARGA ===== */
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            border-right-color: transparent;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="sidebar">
+            <div class="logo">
+                <img src="NavSonSmashB.png" alt="Logo NavSon Smash">
+                <h1>NavSon Smash</h1>
+                <p>INFORMACION DE JUGADORES, TORNEOS Y MAS</p>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li class="nav-item"><a href="home.html" class="nav-link active">HOME</a></li>
+                    <li class="nav-item"><a href="PlayerList.html" class="nav-link">PLAYER LIST</a></li>
+                    <li class="nav-item"><a href="https://navsonsmash.blogspot.com/2025/10/foro-entre-jugadores-consejos-y-mas.html" target="_blank" class="nav-link">FOROS</a></li>
+                    <li class="nav-item"><a href="videos.html" class="nav-link">VIDEOS</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <main class="main-content">
+            <h1 class="section-title">Síguenos en Nuestras Redes</h1>
+            <div class="cards-container">
+                <div class="grid">
+                    <div class="card">
+                        <div class="card-icon instagram">📷</div>
+                        <h3>Instagram</h3>
+                        <p>Sigue nuestras últimas noticias, fotos de torneos y contenido exclusivo de la comunidad Smash</p>
+                        <a href="https://www.instagram.com/smashnavson" target="_blank" class="btn">Seguir en Instagram</a>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon facebook">📘</div>
+                        <h3>Facebook</h3>
+                        <p>Únete a nuestra comunidad en Facebook para eventos, discusiones y actualizaciones</p>
+                        <a href="https://www.facebook.com/profile.php?id=100085905885669" target="_blank" class="btn">Seguir en Facebook</a>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon whatsapp">💬</div>
+                        <h3>WhatsApp</h3>
+                        <p>Únete a nuestro grupo de WhatsApp para comunicación directa y coordinación de torneos</p>
+                        <a href="https://chat.whatsapp.com/J8956VjV1aa8f9vdKbN4pM" target="_blank" class="btn">Unirse al Grupo</a>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon youtube">📺</div>
+                        <h3>YouTube</h3>
+                        <p>Mira nuestros torneos, gameplays y contenido especial en nuestro canal de YouTube</p>
+                        <a href="https://www.youtube.com/@navojoasmash" target="_blank" class="btn">Suscribirse</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Efectos interactivos mejorados
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card');
+            const buttons = document.querySelectorAll('.btn');
+            
+            // Efecto de aparición escalonada para las cards
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${(index + 1) * 0.1}s`;
+            });
+            
+            // Efecto de ripple en botones
+            buttons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Crear efecto de ripple
+                    const ripple = document.createElement('span');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.style.cssText = `
+                        position: absolute;
+                        border-radius: 50%;
+                        background: rgba(255, 255, 255, 0.6);
+                        transform: scale(0);
+                        animation: ripple 0.6s linear;
+                        width: ${size}px;
+                        height: ${size}px;
+                        left: ${x}px;
+                        top: ${y}px;
+                    `;
+                    
+                    this.appendChild(ripple);
+                    
+                    // Redirigir después del efecto
+                    setTimeout(() => {
+                        window.open(this.href, '_blank');
+                    }, 300);
+                    
+                    // Limpiar el elemento ripple después de la animación
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
